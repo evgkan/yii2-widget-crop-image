@@ -1,9 +1,9 @@
 <?php
 
-namespace backend\widgets\ImageAreaSelect;
+namespace evgkan\cropimage;
 
+use yii;
 use yii\web\AssetBundle;
-
 
 class CropImageAsset extends AssetBundle {
 
