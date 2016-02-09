@@ -1,0 +1,25 @@
+{
+    "name": "evgkan/yii2-widget-crop-image",
+    "description": "Crop image input widget",
+    "keywords": ["yii2", "crop", "image", "input", "widget"],
+    "homepage": "https://github.com/evgkan/yii2-widget-crop-image",
+    "type": "yii2-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgeny Kangin",
+            "email": "evgkan@list.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "mihaildev/yii2-elfinder": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "evgkan\\cropimage\\": ""
+        }
+    }
+}
