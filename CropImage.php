@@ -59,13 +59,13 @@ class CropImage extends \mihaildev\elfinder\InputFile
         $coords = 'null';
         if(is_array($data)){
             if(array_key_exists('imgSrc', $data)) $imgSrc = $data['imgSrc'];
-            if( array_key_exists('x1', $data) &&
-                array_key_exists('y1', $data) &&
-                array_key_exists('x2', $data) &&
-                array_key_exists('y2', $data) )
+            if( array_key_exists('x1', $data) && !empty($data['x1']) &&
+                array_key_exists('y1', $data) && !empty($data['y1']) &&
+                array_key_exists('x2', $data) && !empty($data['x2']) &&
+                array_key_exists('y2', $data) && !empty($data['y2']) )
             {
                 $x1=$data['x1'];$y1=$data['y1'];$x2=$data['x2'];$y2=$data['y2'];
-                $coords = "{'x1':$x1, 'y1':$y1, 'x2':$x2, 'y2':$y2}";
+                $coords = '{"x1":'.$x1.',"y1":'.$y1.',"x2":'.$x2.',"y2":'.$y2.'}';
             }
         } elseif(!empty($data)) {
             $imgSrc = $data;
@@ -74,8 +74,15 @@ class CropImage extends \mihaildev\elfinder\InputFile
         //рендерим блок с картинкой
         $previewId = $this->id . '_preview_img';
         $previewImgClass = 'form-img-preview';
+        $inputId = BaseHtml::getInputId($this->model, $this->attribute);
         if (empty($imgSrc)) { $preview = "<div id='$previewId'></div>";}
-        else { $preview = Html::tag('div', Html::img($imgSrc, ['class'=>$previewImgClass]), ['id' => $previewId]); }
+        else {
+            $preview = Html::tag('div', Html::img($imgSrc, [
+                'class'=>$previewImgClass.' crop-image',
+                'data-forinput'=>$inputId,
+                'data-coords'=>$coords,
+            ]), ['id'=>$previewId] );
+        }
         $this->template = strtr($this->template, ['{preview}'=>$preview]);
 
         //рендерим инпуты
@@ -96,46 +103,11 @@ class CropImage extends \mihaildev\elfinder\InputFile
         //подключаем файловый менеджер сервера
         $view->registerJs("mihaildev.elFinder.register(" . Json::encode($this->options['id']) . ",
             function(file, id){
-                UnInitImageAreaSelect();
+                UnInitImageAreaSelect('$inputId');
                 \$('#' + id).val(file.url);
-                \$('#$previewId').html('<img class=\"$previewImgClass\" src=\"'+file.url+'\">');
-                $('#$previewId .$previewImgClass').load(function(){ InitImageAreaSelect(null) });
+                \$('#$previewId').html('<img class=\"$previewImgClass crop-image\" src=\"'+file.url+'\" data-forinput=\"$inputId\" >');
+                $('#$previewId .$previewImgClass').load(function(){ InitImageAreaSelect() });
                 return true;}); ");
-        //подключаем инициализацию imageAreaSelect с координатами или без
-        $inputId = BaseHtml::getInputId($this->model, $this->attribute);
-        $view->registerJs("
-            function InitImageAreaSelect(coords){
-                if(coords==null) {coords={'x1':0, 'y1':0, 'x2':1, 'y2':1};}
-                var ias = $('#$previewId .$previewImgClass');
-                width = ias.width(); height = ias.height();
-                //console.log(width, height);
-                ias.imgAreaSelect({
-                    handles: true,
-                    x1: coords.x1*width,
-                    y1: coords.y1*height,
-                    x2: coords.x2*width,
-                    y2: coords.y2*height,
-                    onSelectEnd: function(img,sel) {
-                        x1=sel.x1/width; y1=sel.y1/height; x2=sel.x2/width; y2=sel.y2/height;
-                        updateInputs(x1,y1,x2,y2);
-                    }
-                });
-                var obj = $('#$previewId .$previewImgClass');
-                updateInputs(coords.x1, coords.y1, coords.x2, coords.y2);
-                function updateInputs(x1,y1,x2,y2){
-                    //console.log(x1, y1, x2, y2);
-                    if(x1==x2 || y1==y2){ x1 = y1 = 0; x2 = y2 = 1; }
-                    $('#$inputId-x1').val(x1);
-	                $('#$inputId-y1').val(y1);
-	                $('#$inputId-x2').val(x2);
-	                $('#$inputId-y2').val(y2);
-                }
-            }
-            InitImageAreaSelect($coords);
-            function UnInitImageAreaSelect(){
-                $('#$previewId .$previewImgClass').imgAreaSelect({ remove: true });
-            }
-            ");
 
     }
 

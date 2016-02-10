@@ -15,6 +15,7 @@ class CropImageAsset extends AssetBundle {
     ];
     public $js = [
         'js\jquery.imgareaselect.pack.js',
+        'js\main.js',
     ];
     public $depends = [
         'yii\web\JqueryAsset',
