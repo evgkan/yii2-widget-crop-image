@@ -59,10 +59,10 @@ class CropImage extends \mihaildev\elfinder\InputFile
         $coords = 'null';
         if(is_array($data)){
             if(array_key_exists('imgSrc', $data)) $imgSrc = $data['imgSrc'];
-            if( array_key_exists('x1', $data) && !empty($data['x1']) &&
-                array_key_exists('y1', $data) && !empty($data['y1']) &&
-                array_key_exists('x2', $data) && !empty($data['x2']) &&
-                array_key_exists('y2', $data) && !empty($data['y2']) )
+            if( array_key_exists('x1', $data) && $data['x1']!='' &&
+                array_key_exists('y1', $data) && $data['y1']!='' &&
+                array_key_exists('x2', $data) && $data['x2']!='' &&
+                array_key_exists('y2', $data) && $data['y2']!='' )
             {
                 $x1=$data['x1'];$y1=$data['y1'];$x2=$data['x2'];$y2=$data['y2'];
                 $coords = '{"x1":'.$x1.',"y1":'.$y1.',"x2":'.$x2.',"y2":'.$y2.'}';
