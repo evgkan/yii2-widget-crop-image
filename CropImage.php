@@ -73,7 +73,7 @@ class CropImage extends \mihaildev\elfinder\InputFile
 
         //рендерим блок с картинкой
         $previewId = $this->id . '_preview_img';
-        $previewImgClass = 'form-img-preview';
+        $previewImgClass = 'form-img-preview-crop-image';
         $inputId = BaseHtml::getInputId($this->model, $this->attribute);
         if (empty($imgSrc)) { $preview = "<div id='$previewId'></div>";}
         else {
