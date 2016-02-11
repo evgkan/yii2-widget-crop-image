@@ -11,11 +11,11 @@ class CropImageAsset extends AssetBundle {
     public $basePath = '@cropimage';
 
     public $css = [
-        'css\imgareaselect-default.css',
+        'css/imgareaselect-default.css',
     ];
     public $js = [
-        'js\jquery.imgareaselect.pack.js',
-        'js\main.js',
+        'js/jquery.imgareaselect.pack.js',
+        'js/main.js',
     ];
     public $depends = [
         'yii\web\JqueryAsset',
