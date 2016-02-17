@@ -1,8 +1,8 @@
 /**
  * Created by evgkan on 10.02.2016.
  */
-$(document).ready(function(){
-
+//запускаемся только после полной подгрузки страницы(картинок)
+$(window).load(function(){
     window.InitImageAreaSelect = function(){
         var iass = $('.crop-image');
         iass.each( function( ind ){
@@ -36,13 +36,10 @@ $(document).ready(function(){
             $('#'+inputId+'-y2').val(y2);
         }
     }
-
     window.UnInitImageAreaSelect = function (inputId){
         var elm = $('[data-forinput="'+inputId+'"]');
         console.log(elm);
         elm.imgAreaSelect({ remove: true });
     }
-
     InitImageAreaSelect();
-
 });
