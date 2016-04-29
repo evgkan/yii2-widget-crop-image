@@ -48,7 +48,7 @@ This method searches the cached image, using data framing. If cached image is ab
 ###In common view:
 ```
 <img src="<?= model->photo ?>">       <!-- original photo -->
-<img src="<?= model->cropPhoto() ?>"> <!-- croped and cached photo -->
+<img src="<?= model->cropPhoto ?>"> <!-- croped and cached photo -->
 ```
 ##Warning!
 The widget uses a serverside file manager mihaildev/yii2-elfinder. It needs to be properly configured to access the server file system.
