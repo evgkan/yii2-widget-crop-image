@@ -1,5 +1,6 @@
-# yii2-widget-crop-image
-=================
+yii2-widget-crop-image
+======================
+
 This widget allows you to select a rectangular area on the source image on the server, cache the new image and use it.
 
 ##Installation
